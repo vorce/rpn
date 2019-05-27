@@ -34,7 +34,12 @@ defmodule Rpn do
   def handle_token(token, stack) when token in @supported_operators do
     {op2, stack} = pop(stack)
     {op1, stack} = pop(stack)
-    result = apply(operator_fn(token), [op1, op2])
+
+    result =
+      token
+      |> operator_fn()
+      |> apply([op1, op2])
+
     [result | stack]
   end
 
